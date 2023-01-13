@@ -18,3 +18,15 @@ var SQUARES = {
 };
   
 var BOOL = { FALSE:0, TRUE:1 };
+
+var FilesBrd = new Array(BRD_SQ_NUM);
+var RanksBrd = new Array(BRD_SQ_NUM);
+
+/**
+ * @param f file of the board position
+ * @param r rank of the board position
+ * @returns current position of the piece as number
+ */ 
+function FR2SQ(f,r) {
+    return ( (21 + (f) ) + ( (r) * 10 ) );
+}
