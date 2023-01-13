@@ -1,3 +1,12 @@
+/**
+ * If piece-on-square is equal to side-to-move 
+ * then generate the moves for piece-on-square
+ * @returns [to-add]
+ */
+function PCEINDEX(pce, pceNum) {
+	return (pce * 10 + pceNum);
+}
+
 var GameBoard = {};
 
 // shows the piece status
@@ -12,7 +21,6 @@ GameBoard.fiftyMove = 0;
 // maintains the half move
 GameBoard.hisPly = 0;
 
-// 
 GameBoard.history = [];
 
 // maintains the moves in the search tree
@@ -23,10 +31,16 @@ GameBoard.enPas = 0;
 // tracks the castle permission (king/queen-side)
 GameBoard.castlePerm = 0;
 
-
+// hold the value of the material of each side of the given position
 GameBoard.material = new Array(2); // WHITE,BLACK material of pieces
-GameBoard.pceNum = new Array(13); // indexed by Pce
+
+// keeps track of the piece number
+GameBoard.pceNum = new Array(13); // indexed by piece
+
+// 
 GameBoard.pList = new Array(14 * 10);
+
+
 GameBoard.posKey = 0;
 GameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 GameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);
