@@ -1,6 +1,7 @@
 $(function() {
     init();
-    console.log("main init called");
+    ParseFen(START_FEN);
+	PrintBoard();
 });
 
 /**

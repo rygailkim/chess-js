@@ -63,6 +63,41 @@ GameBoard.pList = new Array(14 * 10);
  */
 GameBoard.posKey = 0;
 
+function PrintBoard() {
+	
+	var sq,file,rank,piece;
+
+	console.log("\nGame Board:\n");
+	// prints each line of rank
+	for(rank = RANKS.RANK_8; rank >= RANKS.RANK_1; rank--) {
+		var line =(RankChar[rank] + "  ");
+		for(file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
+			sq = FR2SQ(file,rank);
+			piece = GameBoard.pieces[sq];
+			line += (" " + PceChar[piece] + " ");
+		}
+		console.log(line);
+	}
+	
+	console.log("");
+	var line = "   ";
+	for(file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
+		line += (' ' + FileChar[file] + ' ');	
+	}
+	
+	console.log(line);
+	console.log("side:" + SideChar[GameBoard.side] );
+	console.log("enPas:" + GameBoard.enPas);
+	line = "";	
+	
+	if(GameBoard.castlePerm & CASTLEBIT.WKCA) line += 'K';
+	if(GameBoard.castlePerm & CASTLEBIT.WQCA) line += 'Q';
+	if(GameBoard.castlePerm & CASTLEBIT.BKCA) line += 'k';
+	if(GameBoard.castlePerm & CASTLEBIT.BQCA) line += 'q';
+	console.log("castle:" + line);
+	console.log("key:" + GameBoard.posKey.toString(16));
+}
+
 /**
  * Generates hash key
  */
@@ -153,16 +188,21 @@ function ResetBoard() {
 	
 }
 
+//rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+
 function ParseFen(fen) {
 
 	ResetBoard();
-	
+
 	var rank = RANKS.RANK_8;
     var file = FILES.FILE_A;
     var piece = 0;
     var count = 0;
     var i = 0;  
 	var sq120 = 0;
+	/**
+	 * Represents position in FEN
+	 */
 	var fenCnt = 0; // fen[fenCnt]
 	
 	while ((rank >= RANKS.RANK_1) && fenCnt < fen.length) {
@@ -181,6 +221,7 @@ function ParseFen(fen) {
             case 'K': piece = PIECES.wK; break;
             case 'Q': piece = PIECES.wQ; break;
 
+			// convert integer to character
             case '1':
             case '2':
             case '3':
@@ -193,6 +234,7 @@ function ParseFen(fen) {
                 count = fen[fenCnt].charCodeAt() - '0'.charCodeAt();
                 break;
             
+			// end of the final rank
             case '/':
             case ' ':
                 rank--;
@@ -205,6 +247,7 @@ function ParseFen(fen) {
 
 		}
 		
+
 		for (i = 0; i < count; i++) {	
 			sq120 = FR2SQ(file,rank);            
             GameBoard.pieces[sq120] = piece;
@@ -214,6 +257,7 @@ function ParseFen(fen) {
 	} // while loop end
 	
 	//rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+	// castling
 	GameBoard.side = (fen[fenCnt] == 'w') ? COLOURS.WHITE : COLOURS.BLACK;
 	fenCnt += 2;
 	
@@ -232,6 +276,7 @@ function ParseFen(fen) {
 	}
 	fenCnt++;	
 	
+	// en passant
 	if (fen[fenCnt] != '-') {        
 		file = fen[fenCnt].charCodeAt() - 'a'.charCodeAt();
 		rank = fen[fenCnt + 1].charCodeAt() - '1'.charCodeAt();	
