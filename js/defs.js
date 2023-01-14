@@ -94,3 +94,28 @@ function SQ64(sq120) {
 function SQ120(sq64) {
 	return Sq64ToSq120[(sq64)];
 }
+
+/*	
+0000 0000 0000 0000 0000 0111 1111 -> From 0x7F
+0000 0000 0000 0011 1111 1000 0000 -> To >> 7, 0x7F
+0000 0000 0011 1100 0000 0000 0000 -> Captured >> 14, 0xF
+0000 0000 0100 0000 0000 0000 0000 -> EP 0x40000
+0000 0000 1000 0000 0000 0000 0000 -> Pawn Start 0x80000
+0000 1111 0000 0000 0000 0000 0000 -> Promoted Piece >> 20, 0xF
+0001 0000 0000 0000 0000 0000 0000 -> Castle 0x1000000
+*/
+
+
+function FROMSQ(m) { return (m & 0x7F); }
+function TOSQ(m) { return ( (m >> 7) & 0x7F); }
+function CAPTURED(m) { return ( (m >> 14) & 0xF); }
+function PROMOTED(m) { return ( (m >> 20) & 0xF); }
+
+var MFLAGEP = 0x40000; //en passant
+var MFLAGPS = 0x80000; //pawn start
+var MFLAGCA = 0x1000000; //castling
+
+var MFLAGCAP = 0x7C000; //captured
+var MFLAGPROM = 0xF00000; //promoted
+
+var NOMOVE = 0;
