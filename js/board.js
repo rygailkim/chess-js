@@ -63,6 +63,40 @@ GameBoard.pList = new Array(14 * 10);
  */
 GameBoard.posKey = 0;
 
+/**
+ * Generates hash key
+ */
+function GeneratePosKey() {
+
+	var sq = 0;
+	var finalKey = 0;
+	var piece = PIECES.EMPTY;
+
+	// hash in unique numbers for each square if not empty or offboard
+	for(sq = 0; sq < BRD_SQ_NUM; ++sq) {
+		piece = GameBoard.pieces[sq];
+		if(piece != PIECES.EMPTY && piece != SQUARES.OFFBOARD) {			
+			finalKey ^= PieceKeys[(piece * 120) + sq];
+		}		
+	}
+
+	// if white, then hash in SideKey
+	if(GameBoard.side == COLOURS.WHITE) {
+		finalKey ^= SideKey;
+	}
+	
+	// if enPas is no square, then hash in enPas square
+	if(GameBoard.enPas != SQUARES.NO_SQ) {		
+		finalKey ^= PieceKeys[GameBoard.enPas];
+	}
+	
+	// hash in castling permission
+	finalKey ^= CastleKeys[GameBoard.castlePerm];
+	
+	return finalKey;
+
+}
+
 
 GameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 GameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);

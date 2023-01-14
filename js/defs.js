@@ -48,6 +48,14 @@ var PieceBishopQueen = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.FAL
 var PieceSlides = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE ];
 
 /**
+ * pce * 120 + sq
+ * enPas pce = EMPTY * 120 + sq
+ */ 
+var PieceKeys = new Array(14 * 120);
+var SideKey;
+var CastleKeys = new Array(16);
+
+/**
  * @returns random number
  */ 
 function RAND_32() {
