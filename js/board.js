@@ -133,6 +133,19 @@ function GeneratePosKey() {
 	return finalKey;
 }
 
+function PrintPieceLists() {
+
+	var piece, pceNum;
+	
+	// loop for every piece type
+	for(piece = PIECES.wP; piece <= PIECES.bK; ++piece) {
+		for(pceNum = 0; pceNum < GameBoard.pceNum[piece]; ++pceNum) {
+			console.log('Piece ' + PceChar[piece] + ' on ' + PrSq( GameBoard.pList[PCEINDEX(piece,pceNum)] ));
+		}
+	}
+
+}
+
 function UpdateListsMaterial() {	
 	
 	var piece,sq,index,colour;
@@ -163,6 +176,7 @@ function UpdateListsMaterial() {
 		}
 	}
 	
+	PrintPieceLists();
 }
 
 function ResetBoard() {
