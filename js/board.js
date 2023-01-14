@@ -302,6 +302,7 @@ function ParseFen(fen) {
 	
 	GameBoard.posKey = GeneratePosKey();	
 	UpdateListsMaterial();
+	PrintSqAttacked();
 }
 
 
@@ -313,6 +314,35 @@ GameBoard.PvArray = new Array(MAXDEPTH);
 GameBoard.searchHistory = new Array( 14 * BRD_SQ_NUM);
 GameBoard.searchKillers = new Array(3 * MAXDEPTH);
 
+/**
+ * Prints the square/s that can be attacked by the current player
+ */
+function PrintSqAttacked() {
+	
+	var sq,file,rank,piece;
+
+	console.log("\nAttacked:\n");
+	
+	for(rank = RANKS.RANK_8; rank >= RANKS.RANK_1; rank--) {
+		var line =((rank+1) + "  ");
+		for(file = FILES.FILE_A; file <= FILES.FILE_H; file++) {
+			sq = FR2SQ(file,rank);
+			if(SqAttacked(sq, GameBoard.side^1) == BOOL.TRUE) piece = "X";
+			else piece = "-";
+			line += (" " + piece + " ");
+		}
+		console.log(line);
+	}
+	
+	console.log("");
+	
+}
+
+
+/**
+ * Checks if current piece is able to attack
+ * @returns BOOL.TRUE if available to attack on position
+ */
 function SqAttacked(sq, side) {
 	var pce;
 	var t_sq;
@@ -338,6 +368,7 @@ function SqAttacked(sq, side) {
 		}
 	}
 
+	// rook
 	for(index = 0; index < 4; ++index) {		
 		dir = RkDir[index];
 		t_sq = sq + dir;
@@ -354,6 +385,7 @@ function SqAttacked(sq, side) {
 		}
 	}
 	
+	// bishop
 	for(index = 0; index < 4; ++index) {		
 		dir = BiDir[index];
 		t_sq = sq + dir;
@@ -370,6 +402,7 @@ function SqAttacked(sq, side) {
 		}
 	}
 	
+	// king
 	for(index = 0; index < 8; index++) {
 		pce = GameBoard.pieces[sq + KiDir[index]];
 		if(pce != SQUARES.OFFBOARD && PieceCol[pce] == side && PieceKing[pce] == BOOL.TRUE) {
