@@ -153,7 +153,7 @@ function UpdateListsMaterial() {
 		sq = SQ120(index);
 		piece = GameBoard.pieces[sq];
 		if(piece != PIECES.EMPTY) {
-			
+			// console.log('piece' + piece + ' on ' + sq);
 			colour = PieceCol[piece];		
 			
 			GameBoard.material[colour] += PieceVal[piece];
