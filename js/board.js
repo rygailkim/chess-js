@@ -175,7 +175,7 @@ function UpdateListsMaterial() {
 			GameBoard.pceNum[piece]++;			
 		}
 	}
-	
+
 	PrintPieceLists();
 }
 
@@ -312,3 +312,72 @@ GameBoard.PvTable = [];
 GameBoard.PvArray = new Array(MAXDEPTH);
 GameBoard.searchHistory = new Array( 14 * BRD_SQ_NUM);
 GameBoard.searchKillers = new Array(3 * MAXDEPTH);
+
+function SqAttacked(sq, side) {
+	var pce;
+	var t_sq;
+	var index;
+	
+	// white pawn going forward
+	if(side == COLOURS.WHITE) {
+		if(GameBoard.pieces[sq - 11] == PIECES.wP || GameBoard.pieces[sq - 9] == PIECES.wP) {
+			return BOOL.TRUE;
+		}
+	// black pawn going to the other direction
+	} else {
+		if(GameBoard.pieces[sq + 11] == PIECES.bP || GameBoard.pieces[sq + 9] == PIECES.bP) {
+			return BOOL.TRUE;
+		}	
+	}
+	
+	// knight
+	for(index = 0; index < 8; index++) {
+		pce = GameBoard.pieces[sq + KnDir[index]];
+		if(pce != SQUARES.OFFBOARD && PieceCol[pce] == side && PieceKnight[pce] == BOOL.TRUE) {
+			return BOOL.TRUE;
+		}
+	}
+
+	for(index = 0; index < 4; ++index) {		
+		dir = RkDir[index];
+		t_sq = sq + dir;
+		pce = GameBoard.pieces[t_sq];
+		while(pce != SQUARES.OFFBOARD) {
+			if(pce != PIECES.EMPTY) {
+				if(PieceRookQueen[pce] == BOOL.TRUE && PieceCol[pce] == side) {
+					return BOOL.TRUE;
+				}
+				break;
+			}
+			t_sq += dir;
+			pce = GameBoard.pieces[t_sq];
+		}
+	}
+	
+	for(index = 0; index < 4; ++index) {		
+		dir = BiDir[index];
+		t_sq = sq + dir;
+		pce = GameBoard.pieces[t_sq];
+		while(pce != SQUARES.OFFBOARD) {
+			if(pce != PIECES.EMPTY) {
+				if(PieceBishopQueen[pce] == BOOL.TRUE && PieceCol[pce] == side) {
+					return BOOL.TRUE;
+				}
+				break;
+			}
+			t_sq += dir;
+			pce = GameBoard.pieces[t_sq];
+		}
+	}
+	
+	for(index = 0; index < 8; index++) {
+		pce = GameBoard.pieces[sq + KiDir[index]];
+		if(pce != SQUARES.OFFBOARD && PieceCol[pce] == side && PieceKing[pce] == BOOL.TRUE) {
+			return BOOL.TRUE;
+		}
+	}
+	
+	return BOOL.FALSE;
+	
+
+}
