@@ -2,6 +2,7 @@ $(function() {
     init();
     ParseFen(START_FEN);
 	PrintBoard();
+	GenerateMoves();
 });
 
 /**

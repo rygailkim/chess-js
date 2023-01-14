@@ -305,10 +305,17 @@ function ParseFen(fen) {
 	PrintSqAttacked();
 }
 
-
+/**
+ * Used to get a certain move
+ */
 GameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 GameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);
+
+/**
+ * 'Index' for the first move at a given ply
+ */
 GameBoard.moveListStart = new Array(MAXDEPTH);
+
 GameBoard.PvTable = [];
 GameBoard.PvArray = new Array(MAXDEPTH);
 GameBoard.searchHistory = new Array( 14 * BRD_SQ_NUM);
