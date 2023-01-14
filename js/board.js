@@ -9,39 +9,61 @@ function PCEINDEX(pce, pceNum) {
 
 var GameBoard = {};
 
-// shows the piece status
+/**
+ * Shows the piece status 
+ */
 GameBoard.pieces = new Array(BRD_SQ_NUM);
 
-// side of the game board
+/**
+ * Shows side of the game board
+ */
 GameBoard.side = COLOURS.WHITE;
 
-// if both players made 50 moves, game is a draw
+/**
+ * Tracks game moves; Game is draw is both players made 50 moves
+ */
 GameBoard.fiftyMove = 0;
 
-// maintains the half move
+/**
+ * Maintains the half-moves 
+ */
 GameBoard.hisPly = 0;
 
 GameBoard.history = [];
 
-// maintains the moves in the search tree
+/**
+ * Maintains the number of moves in the search tree
+ */
 GameBoard.ply = 0;
 
+// 
 GameBoard.enPas = 0;
 
-// tracks the castle permission (king/queen-side)
+/**
+ * Tracks the castle permission (king/queen-side)
+ */
 GameBoard.castlePerm = 0;
 
-// hold the value of the material of each side of the given position
+/**
+ * Holds the value of the material of each side of the given position
+ */
 GameBoard.material = new Array(2); // WHITE,BLACK material of pieces
 
-// keeps track of the piece number
+/**
+ * Keeps track of the piece number
+ */
 GameBoard.pceNum = new Array(13); // indexed by piece
 
 // 
 GameBoard.pList = new Array(14 * 10);
 
-
+/**
+ * Unique number that represents position on the board;
+ * Used for repetition detection (as 3 times repetition detection is a draw)
+ */
 GameBoard.posKey = 0;
+
+
 GameBoard.moveList = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 GameBoard.moveScores = new Array(MAXDEPTH * MAXPOSITIONMOVES);
 GameBoard.moveListStart = new Array(MAXDEPTH);
