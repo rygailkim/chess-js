@@ -21,6 +21,14 @@ var SQUARES = {
   
 var BOOL = { FALSE:0, TRUE:1 };
 
+// allocating maximum memory of each variables
+var MAXGAMEMOVES = 2048;
+var MAXPOSITIONMOVES = 256;
+var MAXDEPTH = 64;
+var INFINITE = 30000;
+var MATE = 29000;
+var PVENTRIES = 10000;
+
 var FilesBrd = new Array(BRD_SQ_NUM);
 var RanksBrd = new Array(BRD_SQ_NUM);
 
