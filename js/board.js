@@ -54,7 +54,9 @@ GameBoard.material = new Array(2); // WHITE,BLACK material of pieces
  */
 GameBoard.pceNum = new Array(13); // indexed by piece
 
-// 
+/**
+ * pce * 10 + pceNum where pceNum is index of piece
+ */
 GameBoard.pList = new Array(14 * 10);
 
 /**
